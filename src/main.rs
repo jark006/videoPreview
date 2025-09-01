@@ -1,6 +1,8 @@
 use std::env;
 use std::path::{Path, PathBuf};
 use std::process::Command;
+use std::time::Duration;
+use std::thread::sleep;
 
 /*
 [dependencies]
@@ -11,7 +13,11 @@ fn main() {
     let args: Vec<String> = env::args().skip(1).collect();
     
     if args.is_empty() {
-        eprintln!("请提供至少一个文件或文件夹路径作为参数");
+        eprintln!("请提供至少一个文件或文件夹路径作为参数\n\n
+        本软件用于给视频批量生成预览图，请把视频文件或文件夹拖到本软件图标上即可，支持拖多个过来\n
+        暂只支持MP4和MKV格式的视频文件\n
+        本窗口15秒后自动退出");
+        sleep(Duration::from_secs(15));
         std::process::exit(1);
     }
 
