@@ -64,10 +64,10 @@ fn main() {
         let path_str = video_path.to_string_lossy();
         let path_str = &path_str[4..];
         println!(
-            "[{}/{} {:.1}%] 处理中: {}",
+            "[{}/{} {}%] 处理中: {}",
             file_count,
             total_files,
-            100.0 * (file_count as f32) / (total_files as f32),
+            100 * file_count / total_files,
             path_str
         );
         file_count += 1;
