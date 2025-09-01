@@ -11,5 +11,3 @@
 下载本软件：[https://github.com/jark006/videoPreview/releases](https://github.com/jark006/videoPreview/releases)
 
 然后把视频文件或文件夹拖到本软件图标上即可，支持选中多个拖过来。
-
-暂只支持`MP4`和`MKV`格式的视频文件。

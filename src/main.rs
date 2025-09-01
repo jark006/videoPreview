@@ -15,7 +15,6 @@ fn main() {
     if args.is_empty() {
         eprintln!("请提供至少一个文件或文件夹路径作为参数\n\n
         本软件用于给视频批量生成预览图，请把视频文件或文件夹拖到本软件图标上即可，支持拖多个过来\n
-        暂只支持MP4和MKV格式的视频文件\n
         本窗口15秒后自动退出");
         sleep(Duration::from_secs(15));
         std::process::exit(1);
@@ -24,10 +23,12 @@ fn main() {
     let mpc_path = r"C:\Program Files\MPC-HC\mpc-hc64.exe";
     if !Path::new(mpc_path).exists() {
         eprintln!("找不到 MPC-HC 执行文件: {}", mpc_path);
+        eprintln!("请到以下链接下载安装 MPC_HC\n\nhttps://github.com/clsid2/mpc-hc");
+        sleep(Duration::from_secs(15));
         std::process::exit(1);
     }
 
-    let video_exts = ["mp4", "mkv"];
+    let video_exts = ["mp4", "mkv", "avi", "mov", "wmv", "flv", "webm", "m4v", "ts", "mpeg", "mpg", "3gp", "rm", "rmvb"];
     let mut video_files = Vec::new();
 
     for arg in args {
@@ -57,7 +58,7 @@ fn main() {
     for video_path in video_files {
         let path_str = video_path.to_string_lossy();
         let path_str = &path_str[4..];
-        println!("[{}/{}] 处理视频: {}", file_count, total_files, path_str);
+        println!("[{}/{} {:.1}%] 处理中: {}", file_count, total_files, (file_count as f32)/(total_files as f32), path_str);
         file_count += 1;
 
         let status = Command::new(mpc_path)
