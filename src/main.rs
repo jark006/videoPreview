@@ -51,11 +51,15 @@ fn main() {
         }
     }
 
+    let total_files = video_files.len();
+    let mut file_count = 1;
+
     for video_path in video_files {
         let path_str = video_path.to_string_lossy();
         let path_str = &path_str[4..];
-        println!("处理视频: {}", path_str);
-        
+        println!("[{}/{}] 处理视频: {}", file_count, total_files, path_str);
+        file_count += 1;
+
         let status = Command::new(mpc_path)
             .arg(path_str.to_string())
             .arg("/thumbnails")
