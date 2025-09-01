@@ -1,8 +1,8 @@
 use std::env;
 use std::path::{Path, PathBuf};
 use std::process::Command;
-use std::time::Duration;
 use std::thread::sleep;
+use std::time::Duration;
 
 /*
 [dependencies]
@@ -11,11 +11,13 @@ clap = { version = "3.2", features = ["derive"] }
 
 fn main() {
     let args: Vec<String> = env::args().skip(1).collect();
-    
+
     if args.is_empty() {
-        eprintln!("请提供至少一个文件或文件夹路径作为参数\n\n
+        eprintln!(
+            "请提供至少一个文件或文件夹路径作为参数\n\n
         本软件用于给视频批量生成预览图，请把视频文件或文件夹拖到本软件图标上即可，支持拖多个过来\n
-        本窗口15秒后自动退出");
+        本窗口15秒后自动退出"
+        );
         sleep(Duration::from_secs(15));
         std::process::exit(1);
     }
@@ -28,12 +30,15 @@ fn main() {
         std::process::exit(1);
     }
 
-    let video_exts = ["mp4", "mkv", "avi", "mov", "wmv", "flv", "webm", "m4v", "ts", "mpeg", "mpg", "3gp", "rm", "rmvb"];
+    let video_exts = [
+        "mp4", "mkv", "avi", "mov", "wmv", "flv", "webm", "m4v", "ts", "mpeg", "mpg", "3gp", "rm",
+        "rmvb",
+    ];
     let mut video_files = Vec::new();
 
     for arg in args {
         let path = Path::new(&arg);
-        
+
         if !path.exists() {
             eprintln!("路径不存在: {}", arg);
             continue;
@@ -58,7 +63,13 @@ fn main() {
     for video_path in video_files {
         let path_str = video_path.to_string_lossy();
         let path_str = &path_str[4..];
-        println!("[{}/{} {:.1}%] 处理中: {}", file_count, total_files, (file_count as f32)/(total_files as f32), path_str);
+        println!(
+            "[{}/{} {:.1}%] 处理中: {}",
+            file_count,
+            total_files,
+            100.0 * (file_count as f32) / (total_files as f32),
+            path_str
+        );
         file_count += 1;
 
         let status = Command::new(mpc_path)
@@ -67,7 +78,7 @@ fn main() {
             .arg("/minimized")
             .status()
             .expect("执行命令失败");
-        
+
         if !status.success() {
             eprintln!("处理失败: {}", path_str);
         }
