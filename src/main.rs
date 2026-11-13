@@ -22,12 +22,15 @@ fn main() {
         std::process::exit(1);
     }
 
-    let mpc_path = r"C:\Program Files\MPC-HC\mpc-hc64.exe";
+    let mut mpc_path = r"C:\Program Files\MPC-HC\mpc-hc64.exe";
     if !Path::new(mpc_path).exists() {
-        eprintln!("找不到 MPC-HC 执行文件: {}", mpc_path);
-        eprintln!("请到以下链接下载安装 MPC_HC\n\nhttps://github.com/clsid2/mpc-hc");
-        sleep(Duration::from_secs(15));
-        std::process::exit(1);
+        mpc_path = r"C:\Program Files (x86)\K-Lite Codec Pack\MPC-HC64\mpc-hc64.exe";
+        if !Path::new(mpc_path).exists() {
+            eprintln!("找不到 MPC-HC 执行文件: {}", mpc_path);
+            eprintln!("请到以下链接下载安装 MPC_HC\n\nhttps://github.com/clsid2/mpc-hc");
+            sleep(Duration::from_secs(15));
+            std::process::exit(1);
+        }
     }
 
     let video_exts = [
